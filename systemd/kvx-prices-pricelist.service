@@ -1,0 +1,23 @@
+[Unit]
+Description=Kvantix price archive: save the full DataHub price list, then verify the chain
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=kvxprices
+Group=kvxprices
+Environment=KVX_PRICES_CONFIG=/etc/kvx-prices/config.json
+ExecStart=/usr/bin/python3 /opt/kvantix/prices/kvx_prices.py pricelist
+# If the chain does not verify, the service fails here (shows in 'systemctl --failed').
+ExecStart=/usr/bin/python3 /opt/kvantix/prices/kvx_prices.py verify
+Nice=10
+TimeoutStartSec=30min
+MemoryMax=384M
+ProtectSystem=strict
+ReadWritePaths=/var/lib/kvx-prices
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+NoNewPrivileges=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX

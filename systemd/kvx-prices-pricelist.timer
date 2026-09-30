@@ -1,0 +1,9 @@
+[Unit]
+Description=Kvantix price archive: save the full DataHub price list (daily 05:17 UTC)
+
+[Timer]
+OnCalendar=*-*-* 05:17:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

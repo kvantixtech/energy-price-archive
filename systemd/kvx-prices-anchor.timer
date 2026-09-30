@@ -1,0 +1,11 @@
+[Unit]
+Description=Kvantix price archive: daily public anchor of the chain head
+
+[Timer]
+# After the day-ahead run (13:47 UTC).
+OnCalendar=*-*-* 14:27:00 UTC
+RandomizedDelaySec=300
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Kvantix price archive: save the day-ahead prices (daily 13:47 UTC)
+
+[Timer]
+OnCalendar=*-*-* 13:47:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

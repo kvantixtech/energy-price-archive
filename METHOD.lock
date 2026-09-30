@@ -1,0 +1,5 @@
+# Published versions of the price archive collector (kvx_prices.py, see METHOD.md).
+# <VERSION>  <sha256 of kvx_prices.py>  <first published, UTC>
+# CI fails if kvx_prices.py changes without a new line here, and the daily anchors
+# record which of these hashes the server was running.
+1.0  ffbc27098a9d421b3cb1a386da3774a7900246a42eda0c8c668326ba37392ca7  2026-09-30T16:50:06Z

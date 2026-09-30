@@ -1,0 +1,17 @@
+name: check
+
+# The collector's rules, tested offline with saved responses, and the format of the anchors
+# and METHOD.lock (a changed collector needs a new version line before it can run).
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collector (offline, with saved responses)
+        run: python3 tests/test_collector.py
+      - name: Anchors and METHOD.lock
+        run: python3 tools/anchor.py lint --anchors anchors/chain-heads.csv

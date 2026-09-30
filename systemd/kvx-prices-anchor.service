@@ -1,0 +1,26 @@
+[Unit]
+Description=Kvantix price archive: publish the chain head to GitHub (daily anchor)
+After=network-online.target kvx-prices-dayahead.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=kvxprices
+Group=kvxprices
+RuntimeDirectory=kvx-prices-anchor
+Environment="GIT_SSH_COMMAND=ssh -i /root/.ssh/kvx_prices_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/root/.ssh/known_hosts"
+# 1) As the collector's own user: read the chain head (read-only). Running this as root
+#    would leave root-owned SQLite WAL files behind and lock the collector out.
+ExecStart=/usr/bin/python3 /opt/kvantix/prices/tools/anchor.py snapshot --db /var/lib/kvx-prices/prices.sqlite3 --code /opt/kvantix/prices/kvx_prices.py --out /run/kvx-prices-anchor/head.json
+# 2) As root ("!" keeps the sandbox below), because the deploy key is root's: one line, commit, push.
+#    The script runs from /opt, never from the clone, so nothing pulled from GitHub is executed.
+ExecStart=!/usr/bin/python3 /opt/kvantix/prices/tools/anchor.py publish --snapshot /run/kvx-prices-anchor/head.json --repo /var/lib/kvx-prices-anchor/energy-price-archive --push
+Nice=10
+TimeoutStartSec=5min
+ProtectSystem=strict
+ReadWritePaths=/var/lib/kvx-prices /var/lib/kvx-prices-anchor
+ProtectHome=read-only
+PrivateTmp=yes
+PrivateDevices=yes
+NoNewPrivileges=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX

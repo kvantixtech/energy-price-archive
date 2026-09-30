@@ -1,0 +1,22 @@
+[Unit]
+Description=Kvantix price archive: save the day-ahead prices for DK1 and DK2
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=kvxprices
+Group=kvxprices
+Environment=KVX_PRICES_CONFIG=/etc/kvx-prices/config.json
+ExecStart=/usr/bin/python3 /opt/kvantix/prices/kvx_prices.py dayahead
+
+Nice=10
+TimeoutStartSec=30min
+MemoryMax=256M
+ProtectSystem=strict
+ReadWritePaths=/var/lib/kvx-prices
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+NoNewPrivileges=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
