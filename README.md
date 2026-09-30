@@ -4,7 +4,7 @@ A daily, hash-chained archive of Denmark's published electricity price list: eve
 
 The official price list shows only its current state. Corrections, renamings and removals overwrite what was there before. This archive keeps every version, so the published history can be checked later.
 
-**Status: collector ready, not yet installed.** The rules are in [`METHOD.md`](METHOD.md). The collector is [`kvx_prices.py`](kvx_prices.py), and its SHA-256 is in [`METHOD.lock`](METHOD.lock). The daily anchors of the hash chain will appear in [`anchors/`](anchors/).
+**Status: collecting since 30 September 2026.** The first snapshot holds 120,026 price list rows. From the second snapshot on, every change is logged. The rules are in [`METHOD.md`](METHOD.md). The collector is [`kvx_prices.py`](kvx_prices.py), and its SHA-256 is in [`METHOD.lock`](METHOD.lock). The hash chain is anchored daily in [`anchors/chain-heads.csv`](anchors/chain-heads.csv).
 
 Part of the Kvantix [Data Playground](https://kvantix.tech/playground/), alongside the [energy test](https://github.com/kvantixtech/energinet-forecasts) and the [weather forecast test](https://github.com/kvantixtech/weather-forecast-test).
 
